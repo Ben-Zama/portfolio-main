@@ -25,7 +25,6 @@
           <PhInstagramLogo :size="28" weight="bold" />
         </a>
       </div>
-      <toggleTheme />
     </nav>
   </div>
 </template>
@@ -33,7 +32,6 @@
 <script setup>
 import { ref } from "vue";
 import Hamburger from "./hamburger.vue";
-import toggleTheme from "./toggleTheme.vue";
 import {
   PhGithubLogo,
   PhInstagramLogo,
@@ -56,7 +54,7 @@ const toggleMenu = () => {
   z-index: 5;
   padding: 15px 20px;
   width: 250px;
-  background: var(--translucent-secondary);
+  background: var(--translucent-primary);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   display: flex;
@@ -67,7 +65,7 @@ const toggleMenu = () => {
     width: 300px;
     nav {
       margin-top: 25px;
-      height: 425px;
+      height: 400px;
     }
   }
   header {
@@ -78,7 +76,7 @@ const toggleMenu = () => {
       font-family: var(--logo-font);
       font-weight: 800;
       font-size: 20px;
-      color: var(--text);
+      color: var(--secondary);
     }
   }
   nav {
@@ -93,7 +91,7 @@ const toggleMenu = () => {
       width: max-content;
       font-family: var(--alternate-font);
       font-size: 32px;
-      color: var(--text);
+      color: var(--secondary);
       transition: 0.3s;
       &:hover {
         padding-left: 5px;
@@ -101,19 +99,26 @@ const toggleMenu = () => {
       }
     }
     hr {
-      border: 1px solid var(--translucent-border);
+      border: 1px solid var(--translucent-secondary);
       border-radius: 8px;
     }
     .social {
       display: flex;
       gap: 15px;
       svg {
-        color: var(--text);
+        color: var(--secondary);
         &:hover {
         color: var(--accent);
         }
       }
     }
+  }
+}
+
+@media (min-width: 600px) {
+  .header {
+    top: 25px;
+    left: 25px;
   }
 }
 </style>

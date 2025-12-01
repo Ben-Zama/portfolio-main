@@ -169,7 +169,7 @@ footer {
 
     .logo {
       width: 100%;
-      padding: 25px 0;
+      padding: 15px 0;
       svg {
         g {
           fill: var(--secondary);
@@ -197,21 +197,8 @@ footer {
         font-size: 12.5px;
         color: var(--secondary);
         cursor: pointer;
-        &::before {
-          content: "";
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 0;
-          height: 2px;
-          background: var(--secondary);
-          border-radius: 5px;
-          transition: 0.3s;
-        }
         &:hover {
-          &::before {
-            width: 100%;
-          }
+          color: var(--reverse-accent);
         }
       }
     }
@@ -255,7 +242,7 @@ footer {
         }
       }
       .logo {
-        padding: 50px 0;
+        padding: 25px 0;
       }
     }
   }

@@ -47,7 +47,7 @@ defineEmits(['toggle'])
 
 .line {
   fill: none;
-  stroke: var(--text);
+  stroke: var(--secondary);
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 2.5;

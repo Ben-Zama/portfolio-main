@@ -43,17 +43,16 @@ const props = defineProps({
 .button {
   line-height: 1;
   text-decoration: none;
-  height: 34px;
   display: inline-flex;
   border: none;
   cursor: pointer;
   align-items: center;
   gap: 8px;
-  background-color: var(--primary);
-  color: var(--secondary);
+  background: var(--secondary);
+  color: var(--primary);
   border-radius: 10rem;
   font-family: var(--alternate-font);
-  padding: 0 12px 0 8px;
+  padding: 4px 12px 4px 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -62,11 +61,11 @@ const props = defineProps({
 
 .button__icon-wrapper {
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   position: relative;
-  color: var(--primary);
-  background-color: var(--secondary);
+  color: var(--secondary);
+  background: var(--bg);
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -74,7 +73,7 @@ const props = defineProps({
 }
 
 .button:hover {
-  background-color: var(--accent);
+  background: var(--accent);
   color: var(--secondary);
 }
 
