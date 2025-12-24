@@ -1,6 +1,22 @@
 <template>
   <section id="hero">
-    <img src="/sample.jpg" alt="" />
+    <Header />
+
+    <div ref="preloader" class="preloader">
+      <img class="noise" src="/noise.png" alt="" />
+      <div class="loader-wrapper">
+        <span class="loader-word">Creative</span>
+        <span class="loader-word">Design</span>
+        <span class="loader-word">Frontend</span>
+        <span class="loader-word">Benzama</span>
+      </div>
+    </div>
+
+    <div class="image">
+      <img :src="background" alt="" />
+    </div>
+
+    <img class="noise" src="/noise.png" alt="" />
 
     <div class="containers">
       <div class="span">
@@ -18,7 +34,7 @@
             years of experience building modern, responsive web interfaces using
             Vue.JS.
           </p>
-          <Cta name="See my works" />
+          <Cta name="See my works" link="#portfolio" />
         </div>
       </div>
 
@@ -66,6 +82,7 @@
 </template>
 
 <script setup>
+import Header from "./header.vue";
 import {
   PhGithubLogo,
   PhInstagramLogo,
@@ -73,29 +90,309 @@ import {
   PhXLogo,
 } from "@phosphor-icons/vue";
 import Cta from "./ctaButton.vue";
+import { ref, onMounted, onUnmounted } from "vue";
+import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
+import { CustomEase } from "gsap/all";
+import Lenis from "lenis";
+
+gsap.registerPlugin(CustomEase, SplitText);
+
+const preloader = ref(null);
+let lenisInstance = null;
+
+const background =
+  window.innerWidth < 600
+    ? "/background-mobile.png"
+    : "/background-desktop.png";
+
+onMounted(() => {
+/*   if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  } */
+
+  lenisInstance = new Lenis();
+
+  window.scrollTo(0, 0);
+  lenisInstance.scrollTo(0, { immediate: true });
+
+  // 2. Stop scrolling immediately
+  lenisInstance.stop();
+
+  // Standard Lenis RAF loop
+  function raf(time) {
+    lenisInstance.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  CustomEase.create("hop", "0.9, 0, 0.1, 1");
+
+  // 1. Initialize SplitText
+  const headerSplit = new SplitText(".container1 h2", {
+    type: "words",
+    wordsClass: "word",
+  });
+  const infoSplit = new SplitText(".container2 p", {
+    type: "words",
+    wordsClass: "word",
+  });
+
+  // 2. Select Loader Words
+  const loaderWords = gsap.utils.toArray(".loader-word");
+
+  // Set initial states
+  gsap.set([headerSplit.words, infoSplit.words], { y: 50, opacity: 0 });
+  gsap.set(loaderWords, { opacity: 0, y: 20 });
+
+  const tl = gsap.timeline({
+    onComplete: () => {
+      lenisInstance.start();
+    },
+  });
+
+  // 3. Word Loop Loader Sequence
+  // Loops through each word: Fade in & Slide up -> Pause -> Fade out & Slide up
+  loaderWords.forEach((word, i) => {
+    tl.to(word, {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      ease: "power2.out",
+    }).to(word, {
+      opacity: 0,
+      y: -20,
+      duration: 0.4,
+      ease: "power2.in",
+      delay: 0.3, // How long the word stays visible
+    });
+  });
+
+  // 4. Remove Preloader
+  tl.to(
+    preloader.value,
+    {
+      opacity: 0,
+      duration: 0.5,
+      onComplete: () => {
+        if (preloader.value) preloader.value.remove();
+      },
+    },
+    "-=0.2"
+  );
+
+  // 5. Image ClipPath and Scale reveal
+  tl.to(
+    ".image",
+    {
+      clipPath: "polygon(35% 35%, 65% 35%, 65% 65%, 35% 65%)",
+      duration: 1.5,
+      ease: "hop",
+    },
+    "-=0.3"
+  );
+
+  tl.to(
+    ".image",
+    {
+      scale: 1.5,
+      duration: 1.5,
+      ease: "hop",
+    },
+    "<"
+  );
+
+  tl.to(".image", {
+    clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+    duration: 2,
+    ease: "hop",
+  });
+
+  tl.to(
+    ".image",
+    {
+      scale: 1,
+      duration: 2,
+      ease: "hop",
+    },
+    "<"
+  );
+
+  // 6. Reveal Content (The Text)
+  tl.to(
+    headerSplit.words,
+    {
+      y: 0,
+      opacity: 1,
+      stagger: 0.05,
+      duration: 1,
+      ease: "power4.out",
+    },
+    "-=1"
+  );
+
+  tl.to(
+    infoSplit.words,
+    {
+      y: 0,
+      opacity: 1,
+      stagger: 0.02,
+      duration: 1,
+      ease: "power4.out",
+    },
+    "-=0.8"
+  );
+
+  // 7. Reveal cta button and badge
+  tl.fromTo(
+    ".badge, .button",
+    {
+      y: 25,
+      opacity: 0,
+    },
+    {
+      y: 0,
+      opacity: 1,
+      stagger: 0.2, // Reduced stagger for a snappier feel
+      duration: 1,
+      ease: "power3.out",
+    },
+    "-=0.5"
+  );
+
+  // 8. Reveal Socials and UI
+  tl.from(
+    ".left-line, .right-line",
+    {
+      opacity: 0,
+      duration: 1.5,
+      stagger: 0.2,
+    },
+    "-=0.8"
+  );
+
+  // 9. logo reveal
+  tl.from(
+    ".logo",
+    {
+      y: 25,
+      opacity: 0,
+      duration: 1.5,
+      ease: "power3.out",
+    },
+    "<"
+  );
+
+  // 10. Header reveal
+  tl.fromTo(
+    ".header",
+    {
+      y: 50,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 1.5,
+      ease: "power3.out",
+    },
+    "<"
+  );
+});
+
+onUnmounted(() => {
+  if (lenisInstance) {
+    lenisInstance.destroy();
+  }
+});
 </script>
 
 <style lang="scss" scoped>
 #hero {
   position: relative;
-  height: 130vh;
+  height: 130svh;
   max-height: 1000px;
-  background: var(--bg);
-  img {
+  background: var(--text);
+  color: var(--text);
+
+  .no-scroll {
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  .word,
+  .char,
+  .digit {
+    position: relative;
+    will-change: transform;
+  }
+
+  .preloader {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100svh;
+    max-height: 1000px;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .loader-wrapper {
+      position: relative;
+      height: 50px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .loader-word {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--alternate-font);
+      font-weight: 900;
+      font-size: 4rem;
+      color: var(--bg);
+      white-space: nowrap;
+      width: 100%;
+    }
+  }
+
+  .image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+    will-change: clip-path;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+    background: var(--bg);
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .noise {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top;
+    z-index: 1;
   }
   .containers {
     position: absolute;
-    bottom: 25px;
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
     display: flex;
     flex-direction: column;
     gap: 25px;
+    z-index: 1;
     .span {
       display: flex;
       flex-direction: column;
@@ -117,8 +414,8 @@ import Cta from "./ctaButton.vue";
           color: var(--secondary);
           .circle {
             position: relative;
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background: var(--accent);
             border-radius: 50%;
             &::after {
@@ -145,7 +442,6 @@ import Cta from "./ctaButton.vue";
         }
         h2 {
           font-family: var(--header-font);
-          color: var(--secondary);
           font-size: 35px;
         }
       }
@@ -153,8 +449,8 @@ import Cta from "./ctaButton.vue";
       .container2 {
         p {
           font-family: var(--alternate-font);
-          color: var(--secondary);
           line-height: 25px;
+          font-weight: bold;
         }
         .button {
           margin-top: 15px;
@@ -166,7 +462,7 @@ import Cta from "./ctaButton.vue";
       height: auto;
       svg {
         g {
-          fill: var(--secondary);
+          fill: var(--text);
         }
       }
     }
@@ -181,10 +477,11 @@ import Cta from "./ctaButton.vue";
     flex-direction: column;
     align-items: center;
     gap: 25px;
+    z-index: 2;
     .line {
       width: 1px;
       height: 20vh;
-      background: var(--secondary);
+      background: var(--text);
       border-radius: 8px;
     }
     a {
@@ -192,9 +489,9 @@ import Cta from "./ctaButton.vue";
       text-orientation: upright;
       font-family: var(--alternate-font);
       font-size: 12.5px;
-      color: var(--secondary);
+      color: var(--text);
       &:hover {
-        color: var(--reverse-accent);
+        color: var(--accent);
       }
     }
   }
@@ -208,10 +505,11 @@ import Cta from "./ctaButton.vue";
     flex-direction: column;
     align-items: center;
     gap: 25px;
+    z-index: 2;
     .line {
       width: 1px;
       height: 20vh;
-      background: var(--secondary);
+      background: var(--text);
       border-radius: 8px;
     }
     .socials {
@@ -220,9 +518,9 @@ import Cta from "./ctaButton.vue";
       gap: 15px;
       a {
         font-size: 20px;
-        color: var(--secondary);
+        color: var(--text);
         &:hover {
-          color: var(--reverse-accent);
+          color: var(--accent);
         }
       }
     }
@@ -232,6 +530,13 @@ import Cta from "./ctaButton.vue";
 @media (min-width: 600px) and (max-width: 1023px) {
   #hero {
     height: 100vh;
+    .preloader {
+      .loader-wrapper {
+        .loader-word {
+          font-size: 8rem;
+        }
+      }
+    }
     .containers {
       .span {
         flex-direction: row;
@@ -250,6 +555,13 @@ import Cta from "./ctaButton.vue";
 @media (min-width: 1024px) {
   #hero {
     height: 100vh;
+    .preloader {
+      .loader-wrapper {
+        .loader-word {
+          font-size: 12rem;
+        }
+      }
+    }
     .containers {
       .span {
         flex-direction: row;
@@ -259,11 +571,6 @@ import Cta from "./ctaButton.vue";
         }
         .container2 {
           width: 30%;
-        }
-      }
-      .logo {
-        svg {
-          opacity: 0.8;
         }
       }
     }

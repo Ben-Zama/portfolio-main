@@ -1,15 +1,30 @@
 <template>
   <main>
-    <Header />
     <Hero />
     <Sliders />
+    <About />
     <Footer />
   </main>
 </template>
 
 <script setup>
-import Header from "./components/header.vue";
-import Hero from "./components/hero.vue"
+import Hero from "./components/hero.vue";
 import Sliders from "./components/sliders.vue";
-import Footer from "./components/footer.vue"
+import About from "./components/about.vue";
+import Footer from "./components/footer.vue";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
+import { onMounted } from "vue";
+gsap.registerPlugin(ScrollTrigger);
+
+onMounted(() => {
+  const lenis = new Lenis();
+  lenis.on("scroll", ScrollTrigger.update);
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+  });
+  gsap.ticker.lagSmoothing(0);
+});
 </script>

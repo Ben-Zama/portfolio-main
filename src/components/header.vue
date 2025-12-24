@@ -6,11 +6,11 @@
     </header>
     <nav>
       <a href="#">Home</a>
-      <a href="#">About me</a>
-      <a href="#">Services</a>
-      <a href="#">Portfolio</a>
-      <a href="#">Contact me</a>
-      <hr>
+      <a href="#about">About me</a>
+      <a href="#services">Services</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact me</a>
+      <hr />
       <div class="social">
         <a href="#" target="_blank">
           <PhGithubLogo :size="28" weight="bold" />
@@ -25,6 +25,7 @@
           <PhInstagramLogo :size="28" weight="bold" />
         </a>
       </div>
+      <themeToggle />
     </nav>
   </div>
 </template>
@@ -32,6 +33,7 @@
 <script setup>
 import { ref } from "vue";
 import Hamburger from "./hamburger.vue";
+import themeToggle from "./themeToggle.vue";
 import {
   PhGithubLogo,
   PhInstagramLogo,
@@ -48,24 +50,25 @@ const toggleMenu = () => {
 
 <style lang="scss" scoped>
 .header {
-  position: absolute;
+  position: fixed;
   top: 15px;
   left: 15px;
   z-index: 5;
   padding: 15px 20px;
   width: 250px;
-  background: var(--translucent-primary);
+  background: var(--translucent-secondary);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
   border-radius: 32px;
   transition: 0.3s;
+  opacity: 0;
   &.opened {
     width: 300px;
     nav {
       margin-top: 25px;
-      height: 400px;
+      height: 430px;
     }
   }
   header {
@@ -76,7 +79,7 @@ const toggleMenu = () => {
       font-family: var(--logo-font);
       font-weight: 800;
       font-size: 20px;
-      color: var(--secondary);
+      color: var(--text);
     }
   }
   nav {
@@ -91,7 +94,7 @@ const toggleMenu = () => {
       width: max-content;
       font-family: var(--alternate-font);
       font-size: 32px;
-      color: var(--secondary);
+      color: var(--text);
       transition: 0.3s;
       &:hover {
         padding-left: 5px;
@@ -99,16 +102,16 @@ const toggleMenu = () => {
       }
     }
     hr {
-      border: 1px solid var(--translucent-secondary);
+      border: 1px solid var(--translucent-primary);
       border-radius: 8px;
     }
     .social {
       display: flex;
       gap: 15px;
       svg {
-        color: var(--secondary);
+        color: var(--text);
         &:hover {
-        color: var(--accent);
+          color: var(--accent);
         }
       }
     }

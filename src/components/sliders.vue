@@ -7,8 +7,9 @@
           <span>/</span>
         </div>
       </Vue3Marquee>
-      <Vue3Marquee class="slider2">
-        <div class="item" v-for="item in skills" :key="item">
+
+      <Vue3Marquee class="slider2" :pause-on-hover="true">
+        <div class="item skill-item" v-for="item in skills" :key="item">
           <img :src="item.icon" alt="" />
           <p>{{ item.name }}</p>
         </div>
@@ -18,7 +19,9 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue";
 import { Vue3Marquee } from "vue3-marquee";
+import gsap from "gsap";
 
 const services = [
   "Landing Pages",
@@ -47,7 +50,7 @@ const skills = [
 
 <style lang="scss" scoped>
 .sliders {
-    overflow: hidden;
+  overflow: clip visible;
   .slider1,
   .slider2 {
     padding: 25px 0;
@@ -55,8 +58,10 @@ const skills = [
   }
   .slider1 {
     width: calc(100% + 10px);
-    transform: translateX(-5px) rotate(1deg);
-    background: var(--text);
+    transform: translateX(-5px);
+    background: var(--secondary);
+    border-width: 1px 0;
+    border: solid var(--translucent-accent);
     .item {
       font-size: 35px;
       p {
@@ -74,7 +79,22 @@ const skills = [
   .slider2 {
     width: calc(100% + 10px);
     transform: translateX(-5px) translateY(-5px) rotate(-1deg);
-    background: var(--secondary);
+    background: var(--bg);
+    border-width: 1px 0;
+    border: solid var(--translucent-accent);
+    .skill-item {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      cursor: default;
+    }
+    &:hover .skill-item {
+      opacity: 0.5;
+      filter: blur(1px);
+    }
+    .skill-item:hover {
+      opacity: 1;
+      filter: blur(0);
+      transform: scale(1.05);
+    }
     .item {
       margin-right: 50px;
       display: flex;
@@ -86,18 +106,10 @@ const skills = [
       }
       p {
         font-family: var(--alternate-font);
-        color: var(--bg);
+        color: var(--text);
         font-size: 22px;
       }
     }
   }
-}
-
-@media (min-width: 600px) {
-    .sliders {
-        .slider1 {
-            transform: translateX(-5px) rotate(0deg);
-        }
-    }
 }
 </style>

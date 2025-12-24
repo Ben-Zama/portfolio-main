@@ -1,5 +1,5 @@
 <template>
-  <a href="#contact" class="button">
+  <a :target="target" :href="link" class="button">
     <span class="button__icon-wrapper">
       <svg
         viewBox="0 0 14 15"
@@ -36,6 +36,13 @@ const props = defineProps({
   name: {
     type: String,
   },
+  link: {
+    type: String
+  },
+  target: {
+    type: String,
+    default: ""
+  }
 });
 </script>
 
@@ -48,8 +55,8 @@ const props = defineProps({
   cursor: pointer;
   align-items: center;
   gap: 8px;
-  background: var(--secondary);
-  color: var(--primary);
+  background: var(--primary);
+  color: var(--secondary);
   border-radius: 10rem;
   font-family: var(--alternate-font);
   padding: 4px 12px 4px 4px;
@@ -64,7 +71,7 @@ const props = defineProps({
   width: 32px;
   height: 32px;
   position: relative;
-  color: var(--secondary);
+  color: var(--text);
   background: var(--bg);
   border-radius: 50%;
   display: grid;

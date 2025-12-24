@@ -1,18 +1,36 @@
-:root {
-  --bg: #171717;
+:root[data-theme="light"] {
+  --bg: #fcfcfc;
   --translucent-bg: #fcfcfc90;
-  --text: #fcfcfc;
-  --primary: #4e4e4e;
-  --translucent-primary: #4e4e4e50;
+  --text: #171717;
+  --primary: #25282c;
+  --translucent-primary: #25282c90;
   --secondary: #ededed;
-  --translucent-secondary: #ededed50;
+  --translucent-secondary: #ededed90;
   --accent: #00aab3;
   --translucent-accent: #00aab390;
   --reverse-accent: #4df6ff;
   --shadow: #e1e1e1;
   --bg-line: #ededed55;
   --translucent-border: #25282c25;
+}
 
+:root[data-theme="dark"] {
+  --bg: #171717;
+  --translucent-bg: #17171790;
+  --text: #fcfcfc;
+  --primary: #ededed;
+  --translucent-primary: #ededed90;
+  --secondary: #25282c;
+  --translucent-secondary: #28282890;
+  --accent: #4df6ff;
+  --translucent-accent: #4df6ff90;
+  --reverse-accent: #00aab3;
+  --shadow: #0f1111;
+  --bg-line: #25282c45;
+  --translucent-border: #ededed15;
+}
+
+:root {
   --header-font: "Noto Sans JP", sans-serif;
   --alternate-font: "Ubuntu", sans-serif;
   --body-font: "Inter", sans-serif;
@@ -38,4 +56,14 @@ a {
 
 main {
   position: relative;
+}
+
+.masked-text {
+  background-image: url('/main.png');
+  background-size: cover;
+  background-position: center;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
