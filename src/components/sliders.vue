@@ -38,6 +38,7 @@ const skills = [
   { name: "JavaScript", icon: "/icons/js.png" },
   { name: "TypeScript", icon: "/icons/ts.png" },
   { name: "TailwindCSS", icon: "/icons/tailwind.png" },
+    { name: "Bootstrap", icon: "/icons/bootstrap.svg"},
   { name: "Sass", icon: "/icons/sass.png" },
   { name: "VueJS", icon: "/icons/vue.png" },
   { name: "Nuxt", icon: "/icons/nuxt.png" },

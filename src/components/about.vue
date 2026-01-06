@@ -1,5 +1,5 @@
 <template>
-  <div id="about">
+  <section id="about">
     <p class="main-text" ref="mainTextRef">
       <span
         v-for="(word, index) in part1Words"
@@ -88,7 +88,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -219,7 +219,7 @@ onMounted(async () => {
 
     .word-span {
       display: inline-block;
-      opacity: 0.2;
+      opacity: 0.1;
       transition: opacity 0.1s ease;
 
       &.accent {

@@ -3,6 +3,9 @@
     <Hero />
     <Sliders />
     <About />
+    <Services />
+    <workProcess />
+    <Skills />
     <Footer />
   </main>
 </template>
@@ -11,6 +14,9 @@
 import Hero from "./components/hero.vue";
 import Sliders from "./components/sliders.vue";
 import About from "./components/about.vue";
+import Services from "./components/services.vue";
+import workProcess from "./components/workProcess.vue";
+import Skills from "./components/skils.vue";
 import Footer from "./components/footer.vue";
 
 import gsap from "gsap";
