@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <div class="image">
+    <div class="hero-image">
       <img :src="background" alt="" />
     </div>
 
@@ -183,7 +183,7 @@ onMounted(() => {
 
   // 5. Image ClipPath and Scale reveal
   tl.to(
-    ".image",
+    ".hero-image",
     {
       clipPath: "polygon(35% 35%, 65% 35%, 65% 65%, 35% 65%)",
       duration: 1.5,
@@ -193,7 +193,7 @@ onMounted(() => {
   );
 
   tl.to(
-    ".image",
+    ".hero-image",
     {
       scale: 1.5,
       duration: 1.5,
@@ -202,14 +202,14 @@ onMounted(() => {
     "<"
   );
 
-  tl.to(".image", {
+  tl.to(".hero-image", {
     clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
     duration: 2,
     ease: "hop",
   });
 
   tl.to(
-    ".image",
+    ".hero-image",
     {
       scale: 1,
       duration: 2,
@@ -358,7 +358,7 @@ onUnmounted(() => {
     }
   }
 
-  .image {
+  .hero-image {
     position: relative;
     width: 100%;
     height: 100%;

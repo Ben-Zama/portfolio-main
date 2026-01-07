@@ -6,6 +6,7 @@
     <Services />
     <workProcess />
     <Skills />
+    <Portfolio />
     <Footer />
   </main>
 </template>
@@ -17,6 +18,7 @@ import About from "./components/about.vue";
 import Services from "./components/services.vue";
 import workProcess from "./components/workProcess.vue";
 import Skills from "./components/skils.vue";
+import Portfolio from "./components/portfolio.vue";
 import Footer from "./components/footer.vue";
 
 import gsap from "gsap";
