@@ -36,6 +36,8 @@ const sectionRef = ref(null);
 const svgRef = ref(null);
 const strokePathRef = ref(null);
 const cardRefs = ref([]);
+// We store the tween instance so we can kill it when resizing
+let scrollTween = null;
 
 const cards = [
   {
@@ -77,70 +79,72 @@ const updatePath = () => {
   svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
 
   const points = [];
-
-  // 1. Start: Top center
-  points.push({ x: w / 2, y: 0 });
+  points.push({ x: w / 2, y: 0 }); // Start
 
   cardElements.forEach((el, i) => {
     const cardRect = el.getBoundingClientRect();
     const cardX = cardRect.left - rect.left + cardRect.width / 2;
     const cardY = cardRect.top - rect.top + cardRect.height / 2;
+    const isMobile = window.innerWidth < 600;
 
-    // 2. Add a "Swing" point BEFORE the card to create the zigzag
-    // On mobile, we swing wide. On desktop, the scattering handles the zigzag.
-    const isMobile = window.innerWidth < 1024;
-    if (i > 0 || isMobile) {
-      const prevY = points[points.length - 1].y;
-      points.push({
-        // Alternates swinging to 10% or 90% of screen width
-        x: i % 2 === 0 ? w * 0.1 : w * 0.9,
-        y: (prevY + cardY) / 2,
-      });
+    if (isMobile) {
+      const wiggleOffset = 40;
+      const mobileX = (w / 2) + (i % 2 === 0 ? -wiggleOffset : wiggleOffset);
+      points.push({ x: mobileX, y: cardY });
+    } else {
+      points.push({ x: cardX, y: cardY });
     }
-
-    // 3. The Card Center point
-    points.push({ x: cardX, y: cardY });
   });
 
-  // 4. End: Bottom center
-  points.push({ x: w / 2, y: h });
+  points.push({ x: w / 2, y: h }); // End
 
-  // 5. Draw the path using Smooth Bezier
+  // Build the Path String
   let pathData = `M ${points[0].x} ${points[0].y}`;
-
   for (let i = 1; i < points.length; i++) {
     const curr = points[i];
     const prev = points[i - 1];
     const handleY = (prev.y + curr.y) / 2;
-    // This creates the "S" curve flow
     pathData += ` C ${prev.x} ${handleY}, ${curr.x} ${handleY}, ${curr.x} ${curr.y}`;
   }
 
   path.setAttribute("d", pathData);
 
-  // 6. Refresh GSAP
+  // --- FIX: REFRESH ANIMATION ---
+  
+  // 1. Get the new exact length of the line
   const pathLength = path.getTotalLength();
-  gsap.set(path, { strokeDasharray: pathLength, strokeDashoffset: pathLength });
-};
 
-onMounted(() => {
-  updatePath();
-  window.addEventListener("resize", updatePath);
+  // 2. Reset the CSS immediately to "hidden" (offset = length)
+  path.style.strokeDasharray = pathLength;
+  path.style.strokeDashoffset = pathLength;
 
-  gsap.to(strokePathRef.value, {
-    strokeDashoffset: 0,
+  // 3. Kill previous ScrollTrigger if it exists to prevent conflicts
+  if (scrollTween) {
+    scrollTween.kill();
+  }
+
+  // 4. Create a fresh animation for this specific path length
+  scrollTween = gsap.to(path, {
+    strokeDashoffset: 0, // Animate to visible
     ease: "none",
     scrollTrigger: {
-      trigger: "#process",
-      start: "top center",
+      trigger: section,
+      start: "top center", // Adjust this if you want it to start earlier/later
       end: "bottom center",
       scrub: 0.5,
     },
   });
+};
+
+onMounted(() => {
+  // Timeout ensures DOM is ready (Vue refs + CSS styles applied)
+  setTimeout(() => updatePath(), 100);
+  window.addEventListener("resize", updatePath);
 });
 
 onUnmounted(() => {
   window.removeEventListener("resize", updatePath);
+  if (scrollTween) scrollTween.kill();
 });
 </script>
 
