@@ -1,7 +1,7 @@
 <template>
   <section id="services" ref="sectionRef">
     <div class="intro">
-      <h2>Services I offer</h2>
+      <h2>Crafting Digital Experiences</h2>
     </div>
 
     <div class="sticky-wrapper" ref="stickyWrapperRef">
@@ -64,7 +64,8 @@
     </div>
 
     <div class="outro">
-      <h2>Every Idea Begins as a Single Image</h2>
+      <h2>Let’s Build Something Remarkable</h2>
+      <CTA name="Contact me" link="#contact" />
     </div>
   </section>
 </template>
@@ -74,6 +75,7 @@ import { PhDeviceMobile, PhGear, PhGlobe } from "@phosphor-icons/vue";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ref, onMounted, onUnmounted } from "vue";
+import CTA from "./ctaButton.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -94,7 +96,7 @@ onMounted(() => {
       gsap.from(".card", {
         scrollTrigger: {
           trigger: ".card-container",
-          start: "top 70%",
+          start: "top 80%",
           toggleActions: "play none none reverse",
         },
         y: 60,
@@ -138,7 +140,7 @@ onMounted(() => {
       tl.to(
         cardContainerRef.value,
         {
-          gap: "20px",
+          gap: "15px",
           duration: 1,
           ease: "power1.inOut",
         },
@@ -158,8 +160,9 @@ onMounted(() => {
       });
 
       // Fan effect
-      tl.to(".card-1", { y: 40, rotation: -10, duration: 3 }, "<");
-      tl.to(".card-3", { y: 40, rotation: 10, duration: 3 }, "<");
+      tl.to(".card-1", { y: 50, rotation: -15, duration: 3 }, "<");
+      tl.to(".card-2", { y: 10, duration: 3 }, "<");
+      tl.to(".card-3", { y: 50, rotation: 15, duration: 3 }, "<");
 
       // Buffer
       tl.to({}, { duration: 0.5 });
@@ -184,15 +187,36 @@ onUnmounted(() => {
 .intro,
 .outro {
   min-height: 50vh;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 40px 20px;
   text-align: center;
+  gap: 75px;
 
   h2 {
     font-family: var(--alternate-font);
     font-size: clamp(40px, 8vw, 100px);
     line-height: 1.1;
+  }
+
+  .button {
+    margin-top: -50px;
+    background: var(--secondary);
+    color: var(--primary);
+    :deep(.button__icon-wrapper) {
+      background: var(--primary);
+      color: var(--secondary);
+    }
+    &:hover {
+      background: var(--accent);
+      color: var(--secondary);
+      :deep(.button__icon-wrapper) {
+        background: var(--secondary);
+        color: var(--accent);
+      }
+    }
   }
 }
 
@@ -200,7 +224,7 @@ onUnmounted(() => {
 .sticky-wrapper {
   position: relative;
   width: 100%;
-  padding: 50px 20px;
+  padding: 0 20px;
 }
 
 .sticky-content {
@@ -234,7 +258,7 @@ onUnmounted(() => {
 .card {
   width: 100%;
   /* Mobile: Auto height to fit text, minimum height for consistency */
-  min-height: 300px; 
+  min-height: 300px;
   position: relative;
   perspective: 1000px;
 }
@@ -245,14 +269,8 @@ onUnmounted(() => {
   height: 100%;
   border-radius: 16px;
   transform-style: preserve-3d;
-  /* On Mobile: Ensure back is visible immediately, no rotation on parent yet */
-  transform: none; 
+  transform: none;
 }
-
-/* MOBILE STRATEGY: 
-   Hide the front (image) entirely. 
-   Show the back (content) naturally.
-*/
 .front {
   display: none; /* Hide image on mobile */
 }
@@ -271,10 +289,8 @@ onUnmounted(() => {
   align-items: center;
   gap: 20px;
   text-align: center;
-  
-  /* Reset rotation for mobile so it is visible */
-  transform: none; 
-  backface-visibility: visible; 
+  transform: none;
+  backface-visibility: visible;
 
   svg {
     font-size: 48px;
@@ -301,26 +317,28 @@ onUnmounted(() => {
   color: var(--secondary);
 }
 
-/* =========================================
-   MEDIA QUERIES
-   ========================================= */
-
-/* --- TABLET --- */
 @media (min-width: 600px) and (max-width: 1023px) {
+  .outro {
+    gap: 100px;
+  }
   .sticky-wrapper {
-    padding: 80px 40px;
+    padding: 0 40px;
   }
 
   .card-container {
     max-width: 600px;
+    .card .card-inner .back h3 {
+      font-size: 30px;
+    }
   }
 }
 
-/* --- DESKTOP (3D Flip Animation Logic) --- */
 @media (min-width: 1024px) {
   .intro,
   .outro {
     height: 100vh;
+    padding: 0 100px;
+    gap: 100px;
   }
 
   .sticky-wrapper {
@@ -379,7 +397,7 @@ onUnmounted(() => {
 
   /* Restore Front Image */
   .front {
-    display: block; 
+    display: block;
     position: absolute;
     top: 0;
     left: 0;
@@ -387,7 +405,8 @@ onUnmounted(() => {
     height: 100%;
     border-radius: inherit;
     backface-visibility: hidden;
-    
+    overflow: hidden;
+
     img {
       width: 100%;
       height: 100%;
@@ -407,7 +426,7 @@ onUnmounted(() => {
 
   /* The "Merged" Initial Look logic */
   .card-1 {
-    border-radius: 20px 0 0 20px;
+    border-radius: 16px 0 0 16px;
     .card-inner {
       border-radius: inherit;
     }
@@ -419,7 +438,7 @@ onUnmounted(() => {
     }
   }
   .card-3 {
-    border-radius: 0 20px 20px 0;
+    border-radius: 0 16px 16px 0;
     .card-inner {
       border-radius: inherit;
     }

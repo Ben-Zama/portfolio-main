@@ -245,7 +245,7 @@ onMounted(() => {
 
   // 7. Reveal cta button and badge
   tl.fromTo(
-    ".badge, .button",
+    ".badge, #hero .button",
     {
       y: 25,
       opacity: 0,
@@ -273,7 +273,7 @@ onMounted(() => {
 
   // 9. logo reveal
   tl.from(
-    ".logo",
+    "#hero .logo",
     {
       y: 25,
       opacity: 0,
@@ -285,7 +285,7 @@ onMounted(() => {
 
   // 10. Header reveal
   tl.fromTo(
-    ".header",
+    "#hero .header",
     {
       y: 50,
     },
