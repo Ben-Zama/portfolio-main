@@ -226,7 +226,7 @@ onUnmounted(() => {
     .container {
       margin: 0 auto;
       max-width: 800px;
-      gap: 25px;
+      gap: 50px;
       .card {
         &:nth-child(odd) {
           align-self: flex-start;

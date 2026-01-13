@@ -92,6 +92,17 @@ onMounted(() => {
 
     // --- MOBILE & TABLET ANIMATIONS (< 1024px) ---
     mm.add("(max-width: 1023px)", () => {
+      gsap.from(headerRef.value, {
+        scrollTrigger: {
+          trigger: ".sticky-header",
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        },
+        y: 60,
+        opacity: 0,
+        duration: 1.2,
+        ease: "power2.out",
+      });
       // Simple stagger fade-in for mobile (Content is already visible via CSS)
       gsap.from(".card", {
         scrollTrigger: {
@@ -101,7 +112,7 @@ onMounted(() => {
         },
         y: 60,
         opacity: 0,
-        duration: 0.6,
+        duration: 1.2,
         stagger: 0.2,
         ease: "power2.out",
       });

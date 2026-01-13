@@ -84,7 +84,7 @@ footer {
   flex-direction: column;
   gap: 25px;
   color: var(--secondary);
-  background: var(--primary);
+  background: var(--accent);
   z-index: 1;
 
   .top {
@@ -104,7 +104,7 @@ footer {
         font-weight: bold;
         font-size: 35px;
         span {
-          color: var(--reverse-accent);
+          color: var(--primary);
         }
       }
 
@@ -129,7 +129,6 @@ footer {
             align-items: center;
             font-weight: bold;
             font-size: 17.5px;
-            background: var(--primary);
             overflow: hidden;
             cursor: pointer;
             .icons {
@@ -152,7 +151,7 @@ footer {
               }
             }
             &:hover {
-              color: var(--reverse-accent);
+              color: var(--primary);
               .icons {
                 :first-child {
                   transform: translateY(-100px);
@@ -198,7 +197,7 @@ footer {
         color: var(--secondary);
         cursor: pointer;
         &:hover {
-          color: var(--reverse-accent);
+          color: var(--primary);
         }
       }
     }

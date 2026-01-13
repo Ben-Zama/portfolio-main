@@ -251,7 +251,7 @@ const skillsR = [
 
 @media (min-width: 1024px) {
   #skills {
-    padding: 100px;
+    padding: 150px 100px;
     .heading {
       h2 {
         font-size: 50px;
