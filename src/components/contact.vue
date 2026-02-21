@@ -1,9 +1,7 @@
 <template>
   <div id="contact" ref="contactSection">
     <div class="contact-container" ref="container">
-      
       <div class="info-grid" ref="infoGrid">
-        
         <div class="tile header-tile" ref="headerTile">
           <h2>Let's work <br /><span>together.</span></h2>
           <p>Have a project in mind? Let's build something incredible.</p>
@@ -42,7 +40,11 @@
         <div class="tile freelance-tile" ref="freelanceTile">
           <span class="tile-label">Available on</span>
           <div class="platforms">
-            <a class="platform-card upwork" target="_blank" href="">
+            <a
+              class="platform-card upwork"
+              target="_blank"
+              href="https://www.upwork.com/freelancers/~0199a1cb5da77e2fab"
+            >
               <img src="/icons/upwork.png" alt="Upwork" />
               <span>Upwork</span>
             </a>
@@ -54,56 +56,129 @@
         </div>
 
         <div class="tile socials-tile" ref="socialsTile">
-          <a target="_blank" href="" aria-label="Github"><PhGithubLogo :size="24" weight="fill" /></a>
-          <a target="_blank" href="" aria-label="LinkedIn"><PhLinkedinLogo :size="24" weight="fill" /></a>
-          <a target="_blank" href="" aria-label="X (Twitter)"><PhXLogo :size="24" weight="fill" /></a>
-          <a target="_blank" href="" aria-label="Instagram"><PhInstagramLogo :size="24" weight="fill" /></a>
+          <a
+            target="_blank"
+            href="https://github.com/Ben-zama"
+            aria-label="Github"
+            ><PhGithubLogo :size="24" weight="fill"
+          /></a>
+          <a
+            target="_blank"
+            href="https://www.linkedin.com/in/benzama-musa/"
+            aria-label="LinkedIn"
+            ><PhLinkedinLogo :size="24" weight="fill"
+          /></a>
+          <a
+            target="_blank"
+            href="https://x.com/benzamasimon"
+            aria-label="X (Twitter)"
+            ><PhXLogo :size="24" weight="fill"
+          /></a>
+          <a
+            target="_blank"
+            href="https://www.instagram.com/benzamasimon/"
+            aria-label="Instagram"
+            ><PhInstagramLogo :size="24" weight="fill"
+          /></a>
         </div>
       </div>
 
       <div class="form-wrapper" ref="formWrapper">
-        <form action="">
+        <form @submit.prevent="submitForm">
           <div class="form-header" ref="formHeader">
             <h3>Send a message</h3>
           </div>
 
           <div class="row" ref="formRow1">
             <div class="input-group">
-              <input type="text" id="name" placeholder=" " required />
+              <input
+                type="text"
+                id="name"
+                name="name"
+                v-model="form.name"
+                placeholder=" "
+                required
+              />
               <label for="name">Your Name</label>
             </div>
             <div class="input-group">
-              <input type="email" id="email" placeholder=" " required />
+              <input
+                type="email"
+                id="email"
+                name="email"
+                v-model="form.email"
+                placeholder=" "
+                required
+              />
               <label for="email">Your Email</label>
             </div>
           </div>
 
           <div class="row" ref="formRow2">
             <div class="input-group">
-              <input type="text" id="subject" placeholder=" " />
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                v-model="form.subject"
+                placeholder=" "
+              />
               <label for="subject">Subject (Optional)</label>
             </div>
             <div class="input-group">
-              <input type="number" id="phone" placeholder=" " />
+              <input
+                type="number"
+                id="phone"
+                name="phone"
+                v-model="form.phone"
+                placeholder=" "
+              />
               <label for="phone">Phone (Optional)</label>
             </div>
           </div>
 
           <div class="input-group full" ref="formTextarea">
-            <textarea id="message" placeholder=" " required></textarea>
+            <textarea
+              id="message"
+              name="message"
+              v-model="form.message"
+              placeholder=" "
+              required
+            ></textarea>
             <label for="message">Tell me about your project</label>
           </div>
 
           <button class="send-button" type="submit" ref="sendBtn">
             <span class="button__icon-wrapper">
-              <svg viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="button__icon-svg" width="10">
-                <path d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z" fill="currentColor"></path>
+              <svg
+                viewBox="0 0 14 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="button__icon-svg"
+                width="10"
+              >
+                <path
+                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                  fill="currentColor"
+                ></path>
               </svg>
-              <svg viewBox="0 0 14 15" fill="none" width="10" xmlns="http://www.w3.org/2000/svg" class="button__icon-svg button__icon-svg__copy">
-                <path d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z" fill="currentColor"></path>
+              <svg
+                viewBox="0 0 14 15"
+                fill="none"
+                width="10"
+                xmlns="http://www.w3.org/2000/svg"
+                class="button__icon-svg button__icon-svg__copy"
+              >
+                <path
+                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                  fill="currentColor"
+                ></path>
               </svg>
             </span>
-            Send message
+            <span v-if="isSubmitting">Sending...</span>
+            <span v-else-if="submitStatus === 'success'">Message Sent!</span>
+            <span v-else-if="submitStatus === 'error'">Failed. Try Again.</span>
+            <span v-else>Send message</span>
           </button>
         </form>
       </div>
@@ -129,23 +204,66 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Refs
 const contactSection = ref(null);
-const container      = ref(null);
-const headerTile     = ref(null);
+const container = ref(null);
+const headerTile = ref(null);
 const contactMethods = ref(null);
-const freelanceTile  = ref(null);
-const socialsTile    = ref(null);
-const formWrapper    = ref(null);
-const formHeader     = ref(null);
-const formRow1       = ref(null);
-const formRow2       = ref(null);
-const formTextarea   = ref(null);
-const sendBtn        = ref(null);
+const freelanceTile = ref(null);
+const socialsTile = ref(null);
+const formWrapper = ref(null);
+const formHeader = ref(null);
+const formRow1 = ref(null);
+const formRow2 = ref(null);
+const formTextarea = ref(null);
+const sendBtn = ref(null);
 
 let ctx; // GSAP context for cleanup
 
+// Add this near the top of your <script setup> with your other refs
+const form = ref({
+  name: "",
+  email: "",
+  subject: "",
+  phone: "",
+  message: "",
+});
+
+const isSubmitting = ref(false);
+const submitStatus = ref(null); // Can be 'success' or 'error'
+
+// The function to handle the fetch request to Formspree
+const submitForm = async () => {
+  isSubmitting.value = true;
+  submitStatus.value = null;
+
+  try {
+    const response = await fetch("https://formspree.io/f/xeokzgao", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(form.value)
+    });
+
+    if (response.ok) {
+      submitStatus.value = 'success';
+      form.value = { name: '', email: '', subject: '', phone: '', message: '' };
+    } else {
+      // 🐛 ADD THIS: Parse and log the exact error from Formspree
+      const errorData = await response.json();
+      console.error("Formspree rejected the request:", errorData);
+      submitStatus.value = 'error';
+    }
+  } catch (error) {
+    console.error("Network or fetch error:", error);
+    submitStatus.value = 'error';
+  } finally {
+    isSubmitting.value = false;
+  }
+};
+
 onMounted(() => {
   ctx = gsap.context(() => {
-
     // ─── 1. Shared ScrollTrigger anchor ────────────────────────────────────
     const trigger = {
       trigger: contactSection.value,
@@ -154,13 +272,26 @@ onMounted(() => {
     };
 
     // ─── 2. Left column tiles — staggered slide-up ─────────────────────────
-    gsap.set([headerTile.value, contactMethods.value, freelanceTile.value, socialsTile.value], {
-      opacity: 0,
-      y: 50,
-    });
+    gsap.set(
+      [
+        headerTile.value,
+        contactMethods.value,
+        freelanceTile.value,
+        socialsTile.value,
+      ],
+      {
+        opacity: 0,
+        y: 50,
+      }
+    );
 
     gsap.to(
-      [headerTile.value, contactMethods.value, freelanceTile.value, socialsTile.value],
+      [
+        headerTile.value,
+        contactMethods.value,
+        freelanceTile.value,
+        socialsTile.value,
+      ],
       {
         opacity: 1,
         y: 0,
@@ -227,7 +358,8 @@ onMounted(() => {
     });
 
     // ─── 7. Platform cards — subtle pop ────────────────────────────────────
-    const platformCards = freelanceTile.value.querySelectorAll(".platform-card");
+    const platformCards =
+      freelanceTile.value.querySelectorAll(".platform-card");
     gsap.from(platformCards, {
       scale: 0.85,
       opacity: 0,
@@ -239,9 +371,12 @@ onMounted(() => {
     });
 
     // ─── 8. Ambient glow — slow float ──────────────────────────────────────
-    gsap.to(contactSection.value.querySelector("&::before") ?? contactSection.value, {
-      // We'll target the pseudo via a real div trick — instead animate the section bg pulse
-    });
+    gsap.to(
+      contactSection.value.querySelector("&::before") ?? contactSection.value,
+      {
+        // We'll target the pseudo via a real div trick — instead animate the section bg pulse
+      }
+    );
 
     // ─── 9. Input focus ripple — micro-interaction on focus ────────────────
     const inputs = formWrapper.value.querySelectorAll("input, textarea");
@@ -250,7 +385,13 @@ onMounted(() => {
         gsap.fromTo(
           input,
           { scale: 1 },
-          { scale: 1.01, duration: 0.2, ease: "power1.out", yoyo: true, repeat: 1 }
+          {
+            scale: 1.01,
+            duration: 0.2,
+            ease: "power1.out",
+            yoyo: true,
+            repeat: 1,
+          }
         );
       });
     });
@@ -275,11 +416,19 @@ onMounted(() => {
         gsap.to(iconBox, { scale: 1.08, duration: 0.25, ease: "back.out(2)" });
       });
       row.addEventListener("mouseleave", () => {
-        gsap.to(arrow, { x: 0, y: 0, duration: 0.35, ease: "elastic.out(1, 0.6)" });
-        gsap.to(iconBox, { scale: 1, duration: 0.35, ease: "elastic.out(1, 0.6)" });
+        gsap.to(arrow, {
+          x: 0,
+          y: 0,
+          duration: 0.35,
+          ease: "elastic.out(1, 0.6)",
+        });
+        gsap.to(iconBox, {
+          scale: 1,
+          duration: 0.35,
+          ease: "elastic.out(1, 0.6)",
+        });
       });
     });
-
   }, contactSection.value); // scoped to component root
 });
 
@@ -296,21 +445,25 @@ onUnmounted(() => {
   padding: 60px 20px;
   display: flex;
   justify-content: center;
-  align-items: center; 
-  font-family: 'Inter', sans-serif;
+  align-items: center;
+  font-family: "Inter", sans-serif;
   position: relative;
   overflow-x: hidden;
   width: 100%;
   box-sizing: border-box;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: -10%;
     left: -10%;
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(var(--accent), 0.15) 0%, transparent 70%);
+    background: radial-gradient(
+      circle,
+      rgba(var(--accent), 0.15) 0%,
+      transparent 70%
+    );
     filter: blur(80px);
     z-index: 0;
     pointer-events: none;
@@ -320,8 +473,12 @@ onUnmounted(() => {
 }
 
 @keyframes ambientFloat {
-  from { transform: translate(0, 0) scale(1); }
-  to   { transform: translate(40px, 30px) scale(1.15); }
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(40px, 30px) scale(1.15);
+  }
 }
 
 .contact-container {
@@ -352,9 +509,9 @@ onUnmounted(() => {
     border-radius: 24px;
     padding: 30px;
     transition: transform 0.3s ease, border-color 0.3s ease;
-    
+
     @media (max-width: 480px) {
-      padding: 20px; 
+      padding: 20px;
     }
   }
 
@@ -365,7 +522,7 @@ onUnmounted(() => {
       font-weight: 900;
       margin-bottom: 10px;
       font-family: var(--header-font);
-      
+
       span {
         color: var(--accent);
         display: inline-block;
@@ -380,7 +537,7 @@ onUnmounted(() => {
   .contact-methods {
     display: flex;
     flex-direction: column;
-    padding: 0; 
+    padding: 0;
     overflow: hidden;
 
     .method-row {
@@ -428,9 +585,9 @@ onUnmounted(() => {
         flex: 1;
         display: flex;
         flex-direction: column;
-        min-width: 0; 
+        min-width: 0;
         font-family: var(--alternate-font);
-        
+
         .label {
           font-size: 0.85rem;
           letter-spacing: 0.5px;
@@ -438,7 +595,7 @@ onUnmounted(() => {
         .value {
           font-size: 1rem;
           font-weight: 600;
-          word-break: break-word; 
+          word-break: break-word;
           line-height: 1.3;
         }
       }
@@ -483,7 +640,7 @@ onUnmounted(() => {
         text-decoration: none;
         color: var(--primary);
         transition: border-color 0.3s ease, transform 0.3s ease;
-        min-width: 100px; 
+        min-width: 100px;
 
         img {
           width: 20px;
@@ -508,16 +665,16 @@ onUnmounted(() => {
     justify-content: space-between;
     align-items: center;
     padding: 20px 30px;
-    
+
     @media (max-width: 400px) {
-        padding: 20px;
+      padding: 20px;
     }
 
     a {
       height: 24px;
       transition: color 0.3s ease;
       // scale/rotate handled by CSS for hover (GSAP handles entrance)
-      
+
       &:hover {
         color: var(--accent);
         transform: scale(1.25) rotate(5deg);
@@ -568,7 +725,7 @@ onUnmounted(() => {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    
+
     @media (min-width: 600px) {
       flex-direction: row;
       gap: 20px;
@@ -579,15 +736,16 @@ onUnmounted(() => {
     position: relative;
     width: 100%;
 
-    input, textarea {
+    input,
+    textarea {
       width: 100%;
-      box-sizing: border-box; 
+      box-sizing: border-box;
       background: var(--translucent-primary-xl);
       border: 1px solid transparent;
       border-bottom: 2px solid var(--translucent-border);
       border-radius: 8px 8px 0 0;
       padding: 15px;
-      padding-top: 25px; 
+      padding-top: 25px;
       font-size: 1rem;
       font-family: var(--body-font);
       color: var(--primary);
@@ -615,7 +773,7 @@ onUnmounted(() => {
     label {
       position: absolute;
       left: 15px;
-      top: 20px; 
+      top: 20px;
       color: var(--text-muted);
       font-size: 0.95rem;
       font-family: var(--alternate-font);

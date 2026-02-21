@@ -57,23 +57,23 @@
     </div>
 
     <div class="left-line">
-      <a href="">Benzamasimon@gmail.com</a>
+      <a href="mailto:benzamasimon@gmail.com">Benzamasimon@gmail.com</a>
       <div class="line"></div>
     </div>
 
     <div class="right-line">
       <div class="line"></div>
       <div class="socials">
-        <a href="#" target="blank">
+        <a href="https://github.com/Ben-zama" target="blank">
           <PhGithubLogo weight="bold" />
         </a>
-        <a href="#" target="blank">
+        <a href="https://www.linkedin.com/in/benzama-musa/" target="blank">
           <PhLinkedinLogo weight="bold" />
         </a>
-        <a href="#" target="blank">
+        <a href="https://x.com/benzamasimon" target="blank">
           <PhXLogo weight="bold" />
         </a>
-        <a href="#" target="blank">
+        <a href="https://www.instagram.com/benzamasimon/" target="blank">
           <PhInstagramLogo weight="bold" />
         </a>
       </div>

@@ -12,16 +12,16 @@
       <a href="#contact">Contact me</a>
       <hr />
       <div class="social">
-        <a href="#" target="_blank">
+        <a href="https://github.com/Ben-zama" target="_blank">
           <PhGithubLogo :size="28" weight="bold" />
         </a>
-        <a href="#" target="_blank">
+        <a href="https://www.linkedin.com/in/benzama-musa/" target="_blank">
           <PhLinkedinLogo :size="28" weight="bold" />
         </a>
-        <a href="#" target="_blank">
+        <a href="https://x.com/benzamasimon" target="_blank">
           <PhXLogo :size="28" weight="bold" />
         </a>
-        <a href="#" target="_blank">
+        <a href="https://www.instagram.com/benzamasimon/" target="_blank">
           <PhInstagramLogo :size="28" weight="bold" />
         </a>
       </div>

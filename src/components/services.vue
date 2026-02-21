@@ -107,7 +107,7 @@ function splitIntoChars(el) {
         .join("");
       return `<span class="word" aria-hidden="true" style="display:inline-flex; overflow:hidden; vertical-align:bottom;">${chars}</span>`;
     })
-    .join(" "); 
+    .join(" ");
 
   return el.querySelectorAll(".char");
 }
@@ -124,8 +124,8 @@ function animateTextOnScroll(el, trigger) {
     ease: "power3.out",
     stagger: 0.018,
     scrollTrigger: {
-      trigger,
-      start: "top 80%",
+      trigger: el,
+      start: "top 85%",
       end: "top 40%",
       toggleActions: "play none none reverse",
     },
@@ -135,8 +135,8 @@ function animateTextOnScroll(el, trigger) {
 onMounted(() => {
   ctx = gsap.context(() => {
     // ── Character-by-character text reveals ──────────────────────────────
-    animateTextOnScroll(introText.value, introText.value.closest(".intro"));
-    animateTextOnScroll(outroText.value, outroText.value.closest(".outro"));
+    animateTextOnScroll(introText.value);
+    animateTextOnScroll(outroText.value);
 
     gsap.from(ctaRef.value.$el, {
       y: 50,
@@ -144,7 +144,7 @@ onMounted(() => {
       duration: 0.8,
       ease: "power3.out",
       // Adding a slight delay so it follows the text animation naturally
-      delay: 0.3, 
+      delay: 0.3,
       scrollTrigger: {
         trigger: ".outro",
         start: "top 80%",
@@ -160,7 +160,7 @@ onMounted(() => {
         scrollTrigger: {
           trigger: ".sticky-header",
           start: "top 80%",
-          toggleActions: "play none none reverse"
+          toggleActions: "play none none reverse",
         },
         y: 60,
         opacity: 0,
@@ -241,6 +241,21 @@ onMounted(() => {
 
       // Buffer
       tl.to({}, { duration: 0.5 });
+
+      animateTextOnScroll(outroText.value);
+
+      gsap.from(ctaRef.value.$el, {
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        delay: 0.3,
+        scrollTrigger: {
+          trigger: $el,
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+      });
     });
   }, sectionRef.value); // Scoped to the section
 });
@@ -255,7 +270,7 @@ onUnmounted(() => {
   background: var(--primary);
   color: var(--secondary);
   width: 100%;
-  overflow: hidden;
+  overflow: clip;
 }
 
 /* --- SHARED LAYOUT --- */

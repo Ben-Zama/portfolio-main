@@ -9,7 +9,7 @@
         <div class="container">
           <div class="box">
             <p>Got a project in mind?</p>
-            <a>
+            <a target="_blank" href="mailto:benzamasimon@gmail.com">
               <p>benzamasimon@gmail.com</p>
               <div class="icons">
                 <PhArrowUpRight />
@@ -19,7 +19,7 @@
           </div>
           <div class="box">
             <p>Prefer to talk it out?</p>
-            <a>
+            <a target="_blan" href="tel:+2347042195431">
               <p>+234 704 2195 431</p>
               <div class="icons">
                 <PhArrowUpRight />
@@ -51,20 +51,20 @@
 
     <div class="bottom">
       <p>
-        &copy; 2025 - Designed and developed by <a href="">Benzama</a>, with
+        &copy; 2025 - Designed and developed by <a target="_blank" href="https://github.com/Ben-zama">Benzama</a>, with
         love and a lot of caffeine ☕
       </p>
       <div class="socials">
-        <a target="_blank" href="#">
+        <a href="https://github.com/Ben-zama" target="_blank">
           <PhGithubLogo weight="bold" />
         </a>
-        <a target="_blank" href="#">
+        <a href="https://www.linkedin.com/in/benzama-musa/" target="_blank">
           <PhLinkedinLogo weight="bold" />
         </a>
-        <a target="_blank" href="#">
+        <a href="https://x.com/benzamasimon" target="_blank">
           <PhXLogo weight="bold" />
         </a>
-        <a target="_blank" href="#">
+        <a href="https://www.instagram.com/benzamasimon/" target="_blank">
           <PhInstagramLogo weight="bold" />
         </a>
       </div>

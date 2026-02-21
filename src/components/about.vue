@@ -3,7 +3,7 @@
     <p class="main-text" ref="mainTextRef">
       <span class="text-block">I’m a frontend </span>
       <span class="text-block accent">developer turning ideas into fast, responsive, and visually engaging web experiences. </span>
-      <span class="text-block">With 3 years of experience, I build clean, accessible interfaces that feel smooth on any device.</span>
+      <span class="text-block">With 3+ years of experience, I build clean, accessible interfaces that feel smooth on any device.</span>
     </p>
 
     <div class="highlights" ref="highlightsRef">

@@ -31,40 +31,17 @@
 <script setup>
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import CTA from "./ctaButton.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const portfolio = [
-  {
-    name: "Halo Oil",
-    info: "A comprehensive dashboard for oil management.",
-    liveLink: "#",
-    image: "/projects-thumbnails/halo.png",
-  },
-  {
-    name: "Nexus AI Event",
-    info: "Tracking carbon footprints with real-time data.",
-    liveLink: "#",
-    image: "/projects-thumbnails/nexus.png",
-  },
-  {
-    name: "Laurelwood",
-    info: "City data visualization and transit mapping.",
-    liveLink: "#",
-    image: "/projects-thumbnails/laurelwood.png",
-  },
-];
+const portfolio = ref();
 
 const cards = ref([]);
 const introText = ref(null);
 const outroText = ref(null);
 const ctaRef = ref(null); // <-- 1. Add the new ref
-
-const totalCards = portfolio.length;
-const totalSegments = totalCards - 1;
-const segmentSize = 1 / totalSegments;
 
 const cardYOffset = 5;
 const cardScaleStep = 0.075;
@@ -116,7 +93,13 @@ function animateTextOnScroll(el, trigger) {
   return tl;
 }
 
-onMounted(() => {
+function initAnimations() {
+  // 1. Calculate these INSIDE the function AFTER data is fetched
+  const totalCards = portfolio.value.length;
+  // Fallback to 1 to prevent division by zero if there's only 1 card
+  const totalSegments = totalCards > 1 ? totalCards - 1 : 1; 
+  const segmentSize = 1 / totalSegments;
+
   // ── Card stack animation ──────────────────────────────────────────────
   cards.value.forEach((card, i) => {
     gsap.set(card, {
@@ -166,24 +149,49 @@ onMounted(() => {
   });
 
   // ── Character-by-character text reveals ──────────────────────────────
-  animateTextOnScroll(introText.value, introText.value.closest(".intro"));
+  if (introText.value) {
+    animateTextOnScroll(introText.value, introText.value.closest(".intro"));
+  }
   
-  // 3. Store the outro timeline
-  const outroTl = animateTextOnScroll(outroText.value, outroText.value.closest(".outro"));
+  // Store the outro timeline
+  if (outroText.value && ctaRef.value) {
+    const outroTl = animateTextOnScroll(outroText.value, outroText.value.closest(".outro"));
 
-  // 4. Append the CTA slide-up animation to the outro timeline
-  gsap.set(ctaRef.value.$el, { y: 40, opacity: 0 }); // Initial hidden state
-  
-  outroTl.to(
-    ctaRef.value.$el,
-    {
-      y: 0,
-      opacity: 1,
-      duration: 0.7,
-      ease: "power3.out",
-    },
-    "-=0.3" // Starts slightly before the text finishes for a fluid look
-  );
+    // Append the CTA slide-up animation to the outro timeline
+    gsap.set(ctaRef.value.$el, { y: 40, opacity: 0 }); // Initial hidden state
+    
+    outroTl.to(
+      ctaRef.value.$el,
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.7,
+        ease: "power3.out",
+      },
+      "-=0.3" // Starts slightly before the text finishes for a fluid look
+    );
+  }
+}
+
+onMounted(async () => {
+  try {
+    // Replace with your actual npoint URL
+    const response = await fetch("https://api.npoint.io/9aa2fb9cd247400c4dcc"); 
+    const data = await response.json();
+    
+    console.log(data)
+
+    portfolio.value = data;
+
+    // Wait for Vue's v-for loop to finish rendering the DOM nodes
+    await nextTick(); 
+    
+    // Now that cards.value is populated with real DOM elements, trigger GSAP
+    initAnimations();
+
+  } catch (error) {
+    console.error("Failed to fetch portfolio data:", error);
+  }
 });
 </script>
 
