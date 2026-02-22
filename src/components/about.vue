@@ -115,11 +115,9 @@ function splitIntoChars(el) {
 }
 
 onMounted(() => {
-  // 1. Character-by-Character Main Text Reveal
   const textBlocks = mainTextRef.value.querySelectorAll(".text-block");
   let allChars = [];
 
-  // Split each block to preserve the .accent styling, then combine all character nodes
   textBlocks.forEach((block) => {
     const chars = splitIntoChars(block);
     allChars = [...allChars, ...chars];
@@ -141,7 +139,6 @@ onMounted(() => {
     },
   });
 
-  // 2. Highlights Section Entrance Animation
   const highlightItems = highlightsRef.value.querySelectorAll(
     ".highlight-item, .highlight-divider"
   );
@@ -159,7 +156,6 @@ onMounted(() => {
     },
   });
 
-  // 3. Cta Entrance Animation
   gsap.fromTo(
     ".cta-wrapper .button",
     {
@@ -179,7 +175,6 @@ onMounted(() => {
     }
   );
 
-  // 4. Timeline Cards Entrance Animation
   const timelineCards = timelineRef.value.querySelectorAll(".timeline-card");
 
   gsap.from(timelineCards, {
