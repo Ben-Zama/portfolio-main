@@ -760,7 +760,7 @@ onUnmounted(() => {
       &:focus + label,
       &:not(:placeholder-shown) + label {
         top: 8px;
-        font-size: 0.75rem;
+        font-size: 0.6rem;
         color: var(--accent);
       }
     }

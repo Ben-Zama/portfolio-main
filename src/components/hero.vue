@@ -118,21 +118,17 @@ const handleResize = () => {
 };
 
 const lockScroll = () => {
-  document.documentElement.style.overflow = "hidden";
+  document.documentElement.style.overflowY = "hidden";
   document.body.style.overflow = "hidden";
   document.documentElement.style.height = "100vh";
   document.body.style.height = "100vh";
-  document.documentElement.style.touchAction = "none";
-  document.body.style.touchAction = "none";
 };
 
 const unlockScroll = () => {
-  document.documentElement.style.overflow = "";
+  document.documentElement.style.overflowY = "auto";
   document.body.style.overflow = "";
   document.documentElement.style.height = "";
   document.body.style.height = "";
-  document.documentElement.style.touchAction = "";
-  document.body.style.touchAction = "";
 };
 
 onMounted(() => {

@@ -25,6 +25,7 @@
   --card-4: #fa8072;
   --card-5: #d8bfd8;
   --card-6: #f0e68c;
+  --form-autocomplete-format: #d0d1d1;
 }
 
 :root[data-theme="dark"] {
@@ -54,6 +55,7 @@
   --card-4: #b22222;
   --card-5: #483d8b;
   --card-6: #daa520;
+  --form-autocomplete-format: #424448;
 }
 
 :root {
@@ -76,6 +78,10 @@ body {
   overflow: hidden;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -93,4 +99,13 @@ main {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px var(--form-autocomplete-format) inset !important;
+    -webkit-text-fill-color: var(--primary) !important;
+    color: black !important;
 }
